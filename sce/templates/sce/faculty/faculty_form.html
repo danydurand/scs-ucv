@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        {% if faculty %}
+            <h6 class="m-0 font-weight-bold text-primary">Editar Facultad</h6>
+            <a href="{% url 'faculty-detail' faculty.id %}" class="my_label">Back</a>
+        {% else %}
+            <h6 class="m-0 font-weight-bold text-primary">Crear Facultad</h6>
+            <a href="{% url 'faculty-list' %}" class="my_label">Back</a>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="boder-bottom mb-4">Facultad</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-info">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}

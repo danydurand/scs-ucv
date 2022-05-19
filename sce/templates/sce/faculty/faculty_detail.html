@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Facultad</h6>
+        <span>
+            <a href="{% url 'faculty-list' %}" class="my_label">Back</a> | 
+            <a href="{% url 'faculty-update' object.id %}" class="my_label">Edit</a>
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" width="80%" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="my_label" style="width: 20%">Nombre</td>
+                        <td>{{object.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">F.Creacion</td>
+                        <td>{{object.created_at | date:"F d, Y"}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">F.Modificacion</td>
+                        <td>{{object.updated_at | date:"F d, Y"}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center table-success" style="border-radius: 3px; padding: 2px">
+            <span class="text-primary">Escuelas</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table" width="80%" cellspacing="0">
+                <thead>
+                    <th>Nombre</th>
+                    <th>F.Creacion</th>
+                    <th>F.Modificacion</th>
+                </thead>
+                <tbody>
+                {% for school in school_list %}
+                    <tr>
+                        <td>{{school.name}}</td>
+                        <td>{{school.created_at}}</td>
+                        <td>{{school.updated_at}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

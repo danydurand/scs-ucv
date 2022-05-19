@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block datatables_css %}
+    <!-- Custom styles for this page -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock datatables_css %}
+
+
+{% block content %}
+    
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Facultades</h6>
+            <a href="{% url 'faculty-create' %}" class="my_label">New</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Nombre</th>
+                            <th class="text-center">Escuelas</th>
+                            <th class="text-center">F.Creacion</th>
+                            <th class="text-center">F.Modificacion</th>
+                            <th class="text-center">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for faculty in object_list %}
+                        <tr>
+                            <td><a href="{% url 'faculty-detail' faculty.id %}">{{faculty.name}}</a></td>
+                            <td class="text-center">{{faculty.school_qty}}</td>
+                            <td class="text-center">{{faculty.created_at | date:"F d, Y"}}</td>
+                            <td class="text-center">{{faculty.updated_at | date:"F d, Y"}}</td>
+                            <td class="text-center">
+                                <a href="{% url 'faculty-update' faculty.id %}" class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'faculty-delete' faculty.id %}" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block datatables_js %}
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{% endblock datatables_js %}
+

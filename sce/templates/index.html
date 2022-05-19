@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% include 'page-heading.html' %}
+    
+    {% include 'cards.html' with school_qty=school_qty depart_qty=depart_qty %}
+
+{% endblock content %}
