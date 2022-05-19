@@ -32,7 +32,7 @@
                         {% for school in object_list %}
                         <tr>
                             <td><a href="{% url 'school-detail' school.id %}">{{school.name}}</a></td>
-                            <td><a href="{% url 'faculty-detail' school.id %}">{{school.faculty}}</a></td>
+                            <td><a href="{% url 'faculty-detail' school.faculty.id %}">{{school.faculty}}</a></td>
                             <td class="text-center">{{school.department_qty}}</td>
                             <td class="text-center">{{school.created_at | date:"F d, Y"}}</td>
                             <td class="text-center">{{school.updated_at | date:"F d, Y"}}</td>
