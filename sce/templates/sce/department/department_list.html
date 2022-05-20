@@ -31,7 +31,7 @@
                         {% for department in object_list %}
                         <tr>
                             <td><a href="{% url 'department-detail' department.id %}">{{department.name}}</a></td>
-                            <td class="text-center">{{department.school}}</td>
+                            <td><a href="{% url 'school-detail' department.school.id %}">{{department.school}}</a></td>
                             <td class="text-center">N/A</td>
                             <td class="text-center">{{department.created_at | date:"F d, Y"}}</td>
                             <td class="text-center">{{department.updated_at | date:"F d, Y"}}</td>

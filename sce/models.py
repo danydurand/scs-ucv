@@ -3,6 +3,7 @@ from django.db import models
 from django.forms import CharField
 from django.urls import reverse
 
+
 class Faculty(models.Model):
     name = models.CharField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now=True)
@@ -22,6 +23,7 @@ class Faculty(models.Model):
         verbose_name = 'Facultad'
         verbose_name_plural = 'Facultades'
         ordering = ['name']
+
 
 class School(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -43,6 +45,7 @@ class School(models.Model):
         verbose_name = 'Escuela'
         verbose_name_plural = 'Escuelas'
         ordering = ['name']
+
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
