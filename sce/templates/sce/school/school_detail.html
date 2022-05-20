@@ -5,7 +5,10 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Escuela</h6>
-        <a href="{% url 'school-list' %}" class="my_label">Back</a>
+        <span>
+            <a href="{% url 'school-list' %}" class="my_label">Lista</a> |
+            <a href="{% url 'school-update' school.id %}" class="my_label">Edit</a>
+        </span>
     </div>
     <div class="card-body">
         <div class="table-responsive">

@@ -10,6 +10,9 @@ urlpatterns = [
 
     path('department_list/', DepartmentListView.as_view(), name='department-list'),
     path('department/<int:pk>/', DepartmentDetailView.as_view(), name='department-detail'),
+    path('department/<int:pk>/update', DepartmentUpdateView.as_view(), name='department-update'),
+    path('department/create', DepartmentCreateView.as_view(), name='department-create'),
+    path('department/<int:pk>/delete', DepartmentDeleteView.as_view(), name='department-delete'),
 
     path('school_list/', SchoolListView.as_view(), name='school-list'),
     path('school/<int:pk>/', SchoolDetailView.as_view(), name='school-detail'),
