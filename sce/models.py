@@ -2,12 +2,15 @@ from tkinter import CASCADE
 from django.db import models
 from django.forms import CharField
 from django.urls import reverse
-
+from django.contrib.auth.models import User
 
 class Faculty(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField('Nombre', max_length=100, unique=True)
+    is_active = models.BooleanField('Activa ?', default=False)
+    created_at = models.DateTimeField('F. Creacion', auto_now_add=True)
+    updated_at = models.DateTimeField('F. Modificacion', auto_now=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_faculties')
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_faculties')
     
     def __str__(self) -> str:
         return self.name
@@ -26,10 +29,13 @@ class Faculty(models.Model):
 
 
 class School(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField('Nombre', max_length=100, unique=True)
+    is_active = models.BooleanField('Activa ?', default=True)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='schools')
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField('F. Creacion', auto_now_add=True)
+    updated_at = models.DateTimeField('F. Actualizacion', auto_now=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_schools')
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_schools')
 
     def __str__(self):
         return self.name
@@ -48,10 +54,12 @@ class School(models.Model):
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField('Nombre', max_length=100)
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='departments')
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField('F. Creacion', auto_now_add=True)
+    updated_at = models.DateTimeField('F. Modificacion', auto_now=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_departments')
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_departments')
 
     def __str__(self):
         return self.name

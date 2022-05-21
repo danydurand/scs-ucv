@@ -32,8 +32,8 @@
                         <tr>
                             <td><a href="{% url 'faculty-detail' faculty.id %}">{{faculty.name}}</a></td>
                             <td class="text-center">{{faculty.school_qty}}</td>
-                            <td class="text-center">{{faculty.created_at | date:"F d, Y"}}</td>
-                            <td class="text-center">{{faculty.updated_at | date:"F d, Y"}}</td>
+                            <td class="text-center">{{faculty.created_at | date:"d/m/Y H:i"}}</td>
+                            <td class="text-center">{{faculty.updated_at | date:"d/m/Y H:i"}}</td>
                             <td class="text-center">
                                 <a href="{% url 'faculty-update' faculty.id %}" class="btn btn-sm btn-outline-info">
                                     <i class="fas fa-edit"></i>

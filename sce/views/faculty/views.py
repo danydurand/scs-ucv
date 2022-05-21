@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from sce.models import *
 
@@ -13,12 +14,12 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-class FacultyListView(ListView):
+class FacultyListView(LoginRequiredMixin, ListView):
     model = Faculty
     template_name = 'sce/faculty/faculty_list.html'
 
 
-class FacultyDetailView(DetailView):
+class FacultyDetailView(LoginRequiredMixin, DetailView):
     model = Faculty
     template_name = 'sce/faculty/faculty_detail.html'
 
@@ -28,22 +29,27 @@ class FacultyDetailView(DetailView):
         return context
 
 
-class FacultyCreateView(CreateView):
+class FacultyCreateView(LoginRequiredMixin, CreateView):
     model = Faculty
     template_name = 'sce/faculty/faculty_form.html'
     fields = ['name']
     redirect = 'faculty-detail'
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
-class FacultyUpdateView(UpdateView):
+
+
+class FacultyUpdateView(LoginRequiredMixin, UpdateView):
     model = Faculty
     template_name = 'sce/faculty/faculty_form.html'
     fields = ['name']
     redirect = 'faculty-detail'
 
-    # def form_valid(self, form):
-    #     form.instance.author = self.request.user
-    #     return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
 
     # def test_func(self):
     #     post = self.get_object()
@@ -51,7 +57,7 @@ class FacultyUpdateView(UpdateView):
     #         return True
     #     return False
 
-class FacultyDeleteView(DeleteView):
+class FacultyDeleteView(LoginRequiredMixin, DeleteView):
     model = Faculty
     template_name = 'sce/faculty/faculty_confirm_delete.html'
     success_url = '/faculty_list/'

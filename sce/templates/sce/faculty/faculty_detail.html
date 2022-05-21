@@ -19,32 +19,40 @@
                         <td>{{object.name}}</td>
                     </tr>
                     <tr>
-                        <td class="my_label">F.Creacion</td>
-                        <td>{{object.created_at | date:"F d, Y"}}</td>
+                        <td class="my_label">F. Creacion</td>
+                        <td>{{object.created_at | date:"d/m/Y H:i"}}</td>
                     </tr>
                     <tr>
-                        <td class="my_label">F.Modificacion</td>
-                        <td>{{object.updated_at | date:"F d, Y"}}</td>
+                        <td class="my_label">Creada Por</td>
+                        <td>{{object.created_by}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">F. Modificacion</td>
+                        <td>{{object.updated_at | date:"d/m/Y H:i"}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">Modificada Por</td>
+                        <td>{{object.updated_by}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="text-center table-success" style="border-radius: 3px; padding: 2px">
-            <span class="text-primary">Escuelas</span>
+            <span class="text-primary my_label">Escuelas</span>
         </div>
         <div class="table-responsive">
             <table class="table" width="80%" cellspacing="0">
                 <thead>
                     <th>Nombre</th>
-                    <th>F.Creacion</th>
-                    <th>F.Modificacion</th>
+                    <th>F. Creacion</th>
+                    <th>F. Modificacion</th>
                 </thead>
                 <tbody>
                 {% for school in school_list %}
                     <tr>
                         <td>{{school.name}}</td>
-                        <td>{{school.created_at}}</td>
-                        <td>{{school.updated_at}}</td>
+                        <td>{{school.created_at| date:"d/m/Y H:i"}}</td>
+                        <td>{{school.updated_at| date:"d/m/Y H:i"}}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
