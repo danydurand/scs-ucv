@@ -7,13 +7,13 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Eliminar Facultad</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Delete Faculty</h6>
         <a href="{% url 'faculty-detail' faculty.id %}" class="my_label">Back</a>
     </div>
     <div class="card-body">
         <form method="post">
             {% csrf_token %}
-            <h5>Esta seguro que desea eliminar la Facultad: {{ object.name}} !?</h5>
+            <h5>Are you sure you want to delete this Faculty: {{ object.name}} !?</h5>
             <div class="form-group">
                 <button type="submit" class="btn btn-outline-danger">Yes, Delete</button>
                 <a href="{% url 'faculty-detail' object.id %}" class="btn btn-outline-secondary">Cancel</a>

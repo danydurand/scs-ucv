@@ -32,7 +32,7 @@ class FacultyDetailView(LoginRequiredMixin, DetailView):
 class FacultyCreateView(LoginRequiredMixin, CreateView):
     model = Faculty
     template_name = 'sce/faculty/faculty_form.html'
-    fields = ['name']
+    fields = ['name','is_active']
     redirect = 'faculty-detail'
 
     def form_valid(self, form):
@@ -44,7 +44,7 @@ class FacultyCreateView(LoginRequiredMixin, CreateView):
 class FacultyUpdateView(LoginRequiredMixin, UpdateView):
     model = Faculty
     template_name = 'sce/faculty/faculty_form.html'
-    fields = ['name']
+    fields = ['name','is_active']
     redirect = 'faculty-detail'
 
     def form_valid(self, form):

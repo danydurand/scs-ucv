@@ -16,10 +16,10 @@ STATUS_CHOICES = (
 )
 
 class Faculty(models.Model):
-    name = models.CharField('Nombre', max_length=100, unique=True)
-    is_active = models.BooleanField('Activa ?', default=False)
-    created_at = models.DateTimeField('F. Creacion', auto_now_add=True)
-    updated_at = models.DateTimeField('F. Modificacion', auto_now=True)
+    name = models.CharField(max_length=100, unique=True)
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_faculties')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_faculties')
     
@@ -41,11 +41,11 @@ class Faculty(models.Model):
 
 
 class School(models.Model):
-    name = models.CharField('Nombre', max_length=100, unique=True)
-    is_active = models.BooleanField('Activa ?', default=True)
+    name = models.CharField(max_length=100, unique=True)
+    is_active = models.BooleanField(default=True)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='schools')
-    created_at = models.DateTimeField('F. Creacion', auto_now_add=True)
-    updated_at = models.DateTimeField('F. Actualizacion', auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_schools')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_schools')
 

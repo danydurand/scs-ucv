@@ -4,9 +4,9 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Escuela</h6>
+        <h6 class="m-0 font-weight-bold text-primary">School</h6>
         <span>
-            <a href="{% url 'school-list' %}" class="my_label">Lista</a> |
+            <a href="{% url 'school-list' %}" class="my_label">List</a> |
             <a href="{% url 'school-update' school.id %}" class="my_label">Edit</a>
         </span>
     </div>
@@ -15,41 +15,33 @@
             <table class="table" width="80%" cellspacing="0">
                 <tbody>
                     <tr>
-                        <td class="my_label" style="width: 20%">Nombre</td>
+                        <td class="my_label" style="width: 20%">Name</td>
                         <td>{{object.name}}</td>
                     </tr>
                     <tr>
-                        <td class="my_label" style="width: 20%">Facultad</td>
+                        <td class="my_label" style="width: 20%">Faculty</td>
                         <td>{{object.faculty}}</td>
                     </tr>
                     <tr>
-                        <td class="my_label">F. Creacion</td>
-                        <td>{{object.created_at | date:"d/m/Y H:i"}}</td>
+                        <td class="my_label">Created At</td>
+                        <td>{{object.created_at | date:"d/m/Y H:i"}} ({{object.created_by}})</td>
                     </tr>
                     <tr>
-                        <td class="my_label">Creada Por</td>
-                        <td>{{object.created_by}}</td>
-                    </tr>
-                    <tr>
-                        <td class="my_label">F. Modificacion</td>
-                        <td>{{object.updated_at | date:"d/m/Y H:i"}}</td>
-                    </tr>
-                    <tr>
-                        <td class="my_label">Modificada Por</td>
-                        <td>{{object.updated_by}}</td>
+                        <td class="my_label">Updated At</td>
+                        <td>{{object.updated_at | date:"d/m/Y H:i"}} ({{object.updated_by}})</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="text-center table-success" style="border-radius: 3px; padding: 2px">
-            <span class="text-primary my_label">Departamentos</span>
+            <span class="text-primary my_label">Departaments</span>
         </div>
         <div class="table-responsive">
             <table class="table" width="80%" cellspacing="0">
                 <thead>
-                    <th>Nombre</th>
-                    <th>F. Creacion</th>
-                    <th>F. Modificacion</th>
+                    <th>Name</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
                 </thead>
                 <tbody>
                     {% for department in department_list %}
