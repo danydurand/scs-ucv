@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Professor</h6>
+        <span>
+        <a href="{% url 'professor-list' %}" class="my_label">Back</a> | 
+        <a href="{% url 'professor-update' professor.id %}" class="my_label">Edit</a>
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" width="80%" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="my_label" style="width: 20%">Name</td>
+                        <td>{{object.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label" style="width: 20%">Doc Id</td>
+                        <td>{{object.id_document}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label" style="width: 20%">Department</td>
+                        <td>{{object.department}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">Created At</td>
+                        <td>{{object.created_at | date:"d/m/Y H:i"}} ({{object.created_by}})</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">Updated At</td>
+                        <td>{{object.updated_at | date:"d/m/Y H:i"}} ({{object.updated_by}})</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

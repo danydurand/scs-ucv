@@ -1,0 +1,62 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Departamento</h6>
+        <span>
+        <a href="{% url 'department-list' %}" class="my_label">Regresar</a> | 
+        <a href="{% url 'department-update' department.id %}" class="my_label">Editar</a>
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" width="80%" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="my_label" style="width: 20%">Nombre</td>
+                        <td>{{object.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label" style="width: 20%">Escuela</td>
+                        <td>{{object.school}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">F. Creacion</td>
+                        <td>{{object.created_at | date:"d/m/Y H:i"}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">Creada Por</td>
+                        <td>{{object.created_by}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">F. Modificacion</td>
+                        <td>{{object.updated_at | date:"d/m/Y H:i"}}</td>
+                    </tr>
+                    <tr>
+                        <td class="my_label">Modificada Por</td>
+                        <td>{{object.updated_by}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center py-1" style="background-color: #CCC; border-radius: 3px; vertical-align:middle">
+            <span class="text-primary my_label">Profesores</p>
+        </div>
+        <div class="table-responsive">
+            <table class="table" width="80%" cellspacing="0">
+                <thead>
+                    <th>Nombre</th>
+                    <th>F.Creacion</th>
+                    <th>F.Modificacion</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

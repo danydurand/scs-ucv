@@ -13,10 +13,11 @@ class DepartmentDetailView(LoginRequiredMixin, DetailView):
     model = Department
     template_name = 'sce/department/department_detail.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['department_list'] = Department.objects.filter(school=context['school'])
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['professor_list'] = context['department'].professors.all()
+        return context
+
 
 class DepartmentCreateView(LoginRequiredMixin, CreateView):
     model = Department

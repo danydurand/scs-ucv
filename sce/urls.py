@@ -3,10 +3,17 @@ from django.urls import path
 from .views.faculty.views import * 
 from .views.school.views import * 
 from .views.department.views import * 
+from .views.professor.views import * 
 
 
 urlpatterns = [
     path('', index, name='index'),
+
+    path('professor_list/', ProfessorListView.as_view(), name='professor-list'),
+    path('professor/<int:pk>/', ProfessorDetailView.as_view(), name='professor-detail'),
+    path('professor/<int:pk>/update', DepartmentUpdateView.as_view(), name='professor-update'),
+    path('professor/create', DepartmentCreateView.as_view(), name='professor-create'),
+    path('professor/<int:pk>/delete', DepartmentDeleteView.as_view(), name='professor-delete'),
 
     path('department_list/', DepartmentListView.as_view(), name='department-list'),
     path('department/<int:pk>/', DepartmentDetailView.as_view(), name='department-detail'),

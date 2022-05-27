@@ -33,7 +33,7 @@
                         <tr>
                             <td><a href="{% url 'department-detail' department.id %}">{{department.name}}</a></td>
                             <td><a href="{% url 'school-detail' department.school.id %}">{{department.school}}</a></td>
-                            <td class="text-center">{{department.professor_qty}}</td>
+                            <td class="text-center">N/A</td>
                             <td class="text-center">{{department.created_at | date:"d/m/Y H:i"}}</td>
                             <td class="text-center">{{department.updated_at | date:"d/m/Y H:i"}}</td>
                             <td>

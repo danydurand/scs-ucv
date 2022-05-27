@@ -18,3 +18,10 @@ class DepartmentAdmin(admin.ModelAdmin):
     fields = ['school', 'name']
     search_fields = ['name']
     list_display = ('id', 'name', 'school', 'created_at', 'updated_at')
+
+
+@admin.register(Professor)
+class ProfessorAdmin(admin.ModelAdmin):
+    fields = ['name', 'id_document', 'department', 'gender']
+    search_fields = ['name', 'id_document', 'department', 'gender']
+    list_display = ('id', 'name', 'id_document', 'department', 'gender', 'created_at', 'updated_at')

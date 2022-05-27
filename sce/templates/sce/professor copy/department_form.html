@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        {% if department %}
+            <h6 class="m-0 font-weight-bold text-primary">Editar Departamento</h6>
+            <a href="{% url 'department-detail' department.id %}" class="my_label">Ver</a>
+        {% else %}
+            <h6 class="m-0 font-weight-bold text-primary">Crear Departamento</h6>
+            <a href="{% url 'department-list' %}" class="my_label">Lista</a>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-info">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
