@@ -21,8 +21,8 @@
                     <thead class="table-success">
                         <tr>
                             <th>Name</th>
-                            <th>Is Active</th>
-                            <th class="text-center">Schools</th>
+                            <th class="text-center">Is Active</th>
+                            <th class="text-center">Schools Qty</th>
                             <th class="text-center">Created At</th>
                             <th class="text-center">Updated At</th>
                             <th class="text-center">Options</th>
@@ -31,7 +31,7 @@
                     <tbody>
                         {% for faculty in object_list %}
                         <tr>
-                            <td><a href="{% url 'faculty-detail' faculty.id %}">{{faculty.name}}</a></td>
+                            <td><a href="{{ faculty.get_absolute_url }}">{{faculty.name}}</a></td>
                             <td class="text-center">{{faculty.is_active}}</td>
                             <td class="text-center">{{faculty.school_qty}}</td>
                             <td class="text-center">{{faculty.created_at | date:"d/m/Y H:i"}}</td>

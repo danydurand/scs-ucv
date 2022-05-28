@@ -5,9 +5,17 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Departament</h6>
+        {% if not prev_item == None %}
+            <span>
+                <a href="{% url 'department-detail' prev_item %}" class="my_label">Prev</a> |
+                <a href="{% url 'department-detail' next_item %}" class="my_label">Next</a>
+            </span>
+        {% else %}
+            <a href="#" class="my_label" id="go-back">Go back!</a>
+        {% endif %}
         <span>
-        <a href="{% url 'department-list' %}" class="my_label">List</a> | 
-        <a href="{% url 'department-update' department.id %}" class="my_label">Edit</a>
+            <a href="{% url 'department-list' %}" class="my_label">List</a> | 
+            <a href="{% url 'department-update' department.id %}" class="my_label">Edit</a>
         </span>
     </div>
     <div class="card-body">
@@ -20,7 +28,7 @@
                     </tr>
                     <tr>
                         <td class="my_label" style="width: 20%">School</td>
-                        <td>{{object.school}}</td>
+                        <td>{{object.school.link|safe}}</td>
                     </tr>
                     <tr>
                         <td class="my_label">Created At</td>
@@ -47,7 +55,7 @@
                 <tbody>
                 {% for professor in professor_list %}
                 <tr>
-                    <td>{{professor.name}}</td>
+                    <td>{{professor.link|safe}}</td>
                     <td>{{professor.id_document}}</td>
                     <td>{{professor.created_at | date:"d/m/Y H:i"}}</td>
                     <td>{{professor.updated_at| date:"d/m/Y H:i"}}</td>

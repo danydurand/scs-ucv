@@ -128,6 +128,12 @@
 
     {% block datatables_js %} {% endblock datatables_js %}
 
+    <script>
+        document.getElementById('go-back').addEventListener('click', () => {
+                history.back();
+            });
+    </script>
+
 </body>
 
 </html>

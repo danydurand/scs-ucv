@@ -1,7 +1,9 @@
 from django.shortcuts import render
+# from django.contrib.sessions import  
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from sce.models import *
+from sce.modules.utils import navegation
 
 
 def index(request):
@@ -18,6 +20,11 @@ class FacultyListView(LoginRequiredMixin, ListView):
     model = Faculty
     template_name = 'sce/faculty/faculty_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.request.session['faculty_keys'] = [item.id for item in context['object_list']]
+        return context
+
 
 class FacultyDetailView(LoginRequiredMixin, DetailView):
     model = Faculty
@@ -26,6 +33,12 @@ class FacultyDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['school_list'] = context['faculty'].schools.all()
+        keys = []
+        if 'faculty_keys' in self.request.session:
+            keys = self.request.session['faculty_keys']
+        prev_item, next_item = navegation(context['faculty'].id, keys)
+        context['prev_item'] = prev_item
+        context['next_item'] = next_item
         return context
 
 
@@ -37,6 +50,7 @@ class FacultyCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        form.instance.name = form.instance.name.upper()
         return super().form_valid(form)
 
 
@@ -49,6 +63,7 @@ class FacultyUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
+        form.instance.name = form.instance.name.upper()
         return super().form_valid(form)
 
     # def test_func(self):

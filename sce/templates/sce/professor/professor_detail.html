@@ -5,9 +5,17 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Professor</h6>
+        {% if not prev_item == None %}        
+            <span>
+                <a href="{% url 'professor-detail' prev_item %}" class="my_label">Prev</a> |
+                <a href="{% url 'professor-detail' next_item %}" class="my_label">Next</a>
+            </span>
+        {% else %}
+            <a href="#" class="my_label" id="go-back">Go back!</a>
+        {% endif %}
         <span>
-        <a href="{% url 'professor-list' %}" class="my_label">List</a> | 
-        <a href="{% url 'professor-update' professor.id %}" class="my_label">Edit</a>
+            <a href="{% url 'professor-list' %}" class="my_label">List</a> | 
+            <a href="{% url 'professor-update' professor.id %}" class="my_label">Edit</a>
         </span>
     </div>
     <div class="card-body">
@@ -24,7 +32,7 @@
                     </tr>
                     <tr>
                         <td class="my_label" style="width: 20%">Department</td>
-                        <td>{{object.department}}</td>
+                        <td>{{object.department.link|safe}}</td>
                     </tr>
                     <tr>
                         <td class="my_label">Created At</td>

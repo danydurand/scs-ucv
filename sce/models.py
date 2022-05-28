@@ -4,7 +4,6 @@ from django.forms import CharField
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-
 GENDER_CHOICES = (
     ('M', 'MALE'),
     ('F', 'FEMALE'),
@@ -29,10 +28,13 @@ class Faculty(models.Model):
     def get_absolute_url(self):
         return reverse('faculty-detail', kwargs={'pk': self.id})
         
+    def link(self):
+        return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
+
     @property
     def school_qty(self):
         return self.schools.count()
-    
+
     class Meta:
         # db_table = 'faculty'
         verbose_name = 'Facultad'
@@ -55,6 +57,9 @@ class School(models.Model):
     def get_absolute_url(self):
         return reverse('school-detail', kwargs={'pk': self.id})
         
+    def link(self):
+        return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
+
     @property
     def department_qty(self):
         return self.departments.count()
@@ -67,10 +72,10 @@ class School(models.Model):
 
 
 class Department(models.Model):
-    name = models.CharField('Nombre', max_length=100)
+    name = models.CharField(max_length=100)
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='departments')
-    created_at = models.DateTimeField('F. Creacion', auto_now_add=True)
-    updated_at = models.DateTimeField('F. Modificacion', auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_departments')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_departments')
 
@@ -80,6 +85,9 @@ class Department(models.Model):
     def get_absolute_url(self):
         return reverse('department-detail', kwargs={'pk': self.id})
         
+    def link(self):
+        return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
+
     @property
     def professor_qty(self):
         return self.professors.count()
@@ -92,14 +100,14 @@ class Department(models.Model):
 
 
 class Professor(models.Model):
-    name = models.CharField('Nombre', max_length=100)
-    id_document = models.CharField('Cedula',max_length=20)
-    birth_date = models.DateTimeField('F. Nacimiento', blank=True, null=True)
+    name = models.CharField(max_length=100)
+    id_document = models.CharField(max_length=20)
+    birth_date = models.DateTimeField(blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='professors')
-    gender = models.CharField('Sexo',max_length=1, choices=GENDER_CHOICES)
-    is_active = models.BooleanField('Activo(a) ?',default=True)
-    created_at = models.DateTimeField('F. Creacion', auto_now_add=True)
-    updated_at = models.DateTimeField('F. Modificacion', auto_now=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_professors')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_professors')
 
@@ -107,8 +115,11 @@ class Professor(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('profesor-detail', kwargs={'pk': self.id})
+        return reverse('professor-detail', kwargs={'pk': self.id})
         
+    def link(self):
+        return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
+
     class Meta:
         # db_table = 'professor'
         verbose_name = 'Profesor'
