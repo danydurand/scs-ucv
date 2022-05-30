@@ -24,6 +24,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/datepicker.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
     {% block datatables_css %} {% endblock datatables_css %}
@@ -125,13 +126,17 @@
     <!-- Page level custom scripts -->
     <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+    <script src="{% static 'js/datepicker/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/datepicker/js/prettify.js' %}"></script>
 
     {% block datatables_js %} {% endblock datatables_js %}
 
+    {% block custom_js %} {% endblock custom_js %}
+
     <script>
         document.getElementById('go-back').addEventListener('click', () => {
-                history.back();
-            });
+            history.back();
+        });
     </script>
 
 </body>

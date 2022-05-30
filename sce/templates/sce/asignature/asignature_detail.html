@@ -4,18 +4,18 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Professor</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Asignature</h6>
         {% if not prev_item == None %}        
             <span>
-                <a href="{% url 'professor-detail' prev_item %}" class="my_label">Prev</a> |
-                <a href="{% url 'professor-detail' next_item %}" class="my_label">Next</a>
+                <a href="{% url 'asignature-detail' prev_item %}" class="my_label">Prev</a> |
+                <a href="{% url 'asignature-detail' next_item %}" class="my_label">Next</a>
             </span>
         {% else %}
             <a href="#" class="my_label" id="go-back">Go back!</a>
         {% endif %}
         <span>
-            <a href="{% url 'professor-list' %}" class="my_label">List</a> | 
-            <a href="{% url 'professor-update' professor.id %}" class="my_label">Edit</a>
+            <a href="{% url 'asignature-list' %}" class="my_label">List</a> | 
+            <a href="{% url 'asignature-update' asignature.id %}" class="my_label">Edit</a>
         </span>
     </div>
     <div class="card-body">
@@ -27,24 +27,20 @@
                         <td>{{object.name}}</td>
                     </tr>
                     <tr>
-                        <td class="my_label" style="width: 20%">Doc Id</td>
-                        <td>{{object.id_document}}</td>
-                    </tr>
-                    <tr>
-                        <td class="my_label" style="width: 20%">Department</td>
-                        <td>{{object.department.link|safe}}</td>
+                        <td class="my_label" style="width: 20%">Type</td>
+                        <td>{{object.asignature_type}}</td>
                     </tr>
                     <tr>
                         <td class="my_label" style="width: 20%">Is Active ?</td>
                         <td>{{object.is_active}}</td>
                     </tr>
                     <tr>
-                        <td class="my_label" style="width: 20%">Birth Date</td>
-                        <td>{{object.birth_date | date:"d/m/Y"}}</td>
+                        <td class="my_label" style="width: 20%">Is Exempted Interships ?</td>
+                        <td>{{object.is_exempted_interships}}</td>
                     </tr>
                     <tr>
-                        <td class="my_label" style="width: 20%">Gender</td>
-                        <td>{{object.gender}}</td>
+                        <td class="my_label" style="width: 20%">Department</td>
+                        <td>{{object.department.link|safe}}</td>
                     </tr>
                     <tr>
                         <td class="my_label">Created At</td>

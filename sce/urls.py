@@ -4,10 +4,17 @@ from .views.faculty.views import *
 from .views.school.views import * 
 from .views.department.views import * 
 from .views.professor.views import * 
+from .views.asignature.views import * 
 
 
 urlpatterns = [
     path('', index, name='index'),
+
+    path('asignature_list/', AsignatureListView.as_view(), name='asignature-list'),
+    path('asignature/<int:pk>/', AsignatureDetailView.as_view(), name='asignature-detail'),
+    path('asignature/<int:pk>/update', AsignatureUpdateView.as_view(), name='asignature-update'),
+    path('asignature/create', AsignatureCreateView.as_view(), name='asignature-create'),
+    path('asignature/<int:pk>/delete', AsignatureDeleteView.as_view(), name='asignature-delete'),
 
     path('professor_list/', ProfessorListView.as_view(), name='professor-list'),
     path('professor/<int:pk>/', ProfessorDetailView.as_view(), name='professor-detail'),

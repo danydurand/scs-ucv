@@ -33,7 +33,7 @@ class ProfessorDetailView(LoginRequiredMixin, DetailView):
 class ProfessorCreateView(LoginRequiredMixin, CreateView):
     model = Professor
     template_name = 'sce/professor/professor_form.html'
-    fields = ['name', 'id_document', 'department']
+    fields = ['name', 'id_document', 'department', 'is_active', 'birth_date', 'gender']
     redirect = 'professor-detail'
 
     def form_valid(self, form):
@@ -46,7 +46,7 @@ class ProfessorCreateView(LoginRequiredMixin, CreateView):
 class ProfessorUpdateView(LoginRequiredMixin, UpdateView):
     model = Professor
     template_name = 'sce/professor/professor_form.html'
-    fields = ['name', 'id_document', 'department']
+    fields = ['name', 'id_document', 'department', 'is_active', 'birth_date', 'gender']
     redirect = 'professor-detail'
 
     def form_valid(self, form):

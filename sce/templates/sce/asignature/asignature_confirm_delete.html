@@ -7,16 +7,16 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Delete Professor</h6>
-        <a href="{% url 'department-detail' department.id %}" class="my_label">Back</a>
+        <h6 class="m-0 font-weight-bold text-primary">Delete Asignature</h6>
+        <a href="{% url 'asignature-detail' asignature.id %}" class="my_label">Back</a>
     </div>
     <div class="card-body">
         <form method="post">
             {% csrf_token %}
-            <h5>Are you sure you want to delete this Professor: {{ object.name}} !?</h5>
+            <h5>Are you sure you want to delete this Asignature: {{object.name}} !?</h5>
             <div class="form-group">
                 <button type="submit" class="btn btn-outline-danger">Yes, Delete</button>
-                <a href="{% url 'department-detail' object.id %}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{% url 'asignature-detail' object.id %}" class="btn btn-outline-secondary">Cancel</a>
             </div>
         </form>
     </div>

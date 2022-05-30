@@ -37,6 +37,12 @@
                             <td class="text-center">{{professor.created_at | date:"d/m/Y H:i"}}</td>
                             <td class="text-center">{{professor.updated_at | date:"d/m/Y H:i"}}</td>
                             <td>
+                                <a href="{% url 'professor-update' professor.id %}" class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'professor-delete' professor.id %}" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}

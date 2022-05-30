@@ -7,40 +7,34 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        {% if department %}
-            <h6 class="m-0 font-weight-bold text-primary">Edit Professor</h6>
-            <a href="{% url 'department-detail' department.id %}" class="my_label">Detail</a>
+        {% if asignature %}
+            <h6 class="m-0 font-weight-bold text-primary">Edit Asignature</h6>
+            <a href="{% url 'asignature-detail' asignature.id %}" class="my_label">Detail</a>
         {% else %}
-            <h6 class="m-0 font-weight-bold text-primary">Create Professor</h6>
-            <a href="{% url 'department-list' %}" class="my_label">List</a>
+            <h6 class="m-0 font-weight-bold text-primary">Create Asignature</h6>
+            <a href="{% url 'asignature-list' %}" class="my_label">List</a>
         {% endif %}
     </div>
     <div class="card-body">
         <form method="post">
             {% csrf_token %}
-            {# {{ form|crispy }} #}
             <div class="form-row">
                 <div class="form-group col-md-6">
                     {{ form.name | as_crispy_field }}
                 </div>
                 <div class="form-group col-md-6">
-                    {{ form.id_document | as_crispy_field }}
+                    {{ form.asignature_type | as_crispy_field }}
                 </div>
             </div>
             <div class="form-row">
+                <div class="form-group col-md-3" style="margin-top: 30px">
+                    {{ form.is_active | as_crispy_field }}
+                </div>
+                <div class="form-group col-md-3" style="margin-top: 30px">
+                    {{ form.is_exempted_interships | as_crispy_field }}
+                </div>
                 <div class="form-group col-md-6">
                     {{ form.department | as_crispy_field }}
-                </div>
-                <div class="form-group col-md-6">
-                    {{ form.birth_date | as_crispy_field }}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    {{ form.gender | as_crispy_field }}
-                </div>
-                <div class="form-group col-md-6" style="margin-top: 2.5em">
-                    {{ form.is_active | as_crispy_field }}
                 </div>
             </div>
             <div class="form-group">
@@ -55,8 +49,6 @@
 {% block custom_js %}
 <script>
     $(document).ready(function () {
-        console.log('Hola');
-        $('.dateinput').datepicker({ format: "yyyy-mm-dd" });
     });
 </script>
 {% endblock custom_js %}
