@@ -22,6 +22,7 @@ class DepartmentDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['professor_list'] = context['department'].professors.all()
+        context['asignature_list'] = context['department'].asignatures.all()
         keys = []
         if 'department_keys' in self.request.session:
             keys = self.request.session['department_keys']

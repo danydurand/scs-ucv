@@ -41,8 +41,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="text-center py-1" style="background-color: #CCC; border-radius: 3px; vertical-align:middle">
-            <span class="text-primary my_label">Professors</p>
+        <div class="text-center table-success" style="border-radius: 3px; padding: 2px">
+            <span class="text-primary my_label">Professors</span>
         </div>
         <div class="table-responsive">
             <table class="table" width="80%" cellspacing="0">
@@ -59,6 +59,29 @@
                     <td>{{professor.id_document}}</td>
                     <td>{{professor.created_at | date:"d/m/Y H:i"}}</td>
                     <td>{{professor.updated_at| date:"d/m/Y H:i"}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center table-success" style="border-radius: 3px; padding: 2px">
+            <span class="text-primary my_label">Asignatures</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table" width="80%" cellspacing="0">
+                <thead>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                </thead>
+                <tbody>
+                {% for asignature in asignature_list %}
+                <tr>
+                    <td>{{asignature.link|safe}}</td>
+                    <td>{{asignature.asignature_type}}</td>
+                    <td>{{asignature.created_at | date:"d/m/Y H:i"}}</td>
+                    <td>{{asignature.updated_at| date:"d/m/Y H:i"}}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
