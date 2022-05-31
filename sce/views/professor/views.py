@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from sce.models import Professor
@@ -34,7 +35,7 @@ class ProfessorCreateView(LoginRequiredMixin, CreateView):
     model = Professor
     template_name = 'sce/professor/professor_form.html'
     fields = ['name', 'id_document', 'department', 'is_active', 'birth_date', 'gender']
-    redirect = 'professor-detail'
+    success_url = reverse_lazy('professor-list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

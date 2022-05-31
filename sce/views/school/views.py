@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from sce.models import School
@@ -35,7 +36,7 @@ class SchoolCreateView(LoginRequiredMixin, CreateView):
     model = School
     template_name = 'sce/school/school_form.html'
     fields = ['name', 'faculty']
-    redirect = 'school-detail'
+    success_url = reverse_lazy('school-list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from sce.models import Department
@@ -36,13 +37,12 @@ class DepartmentCreateView(LoginRequiredMixin, CreateView):
     model = Department
     template_name = 'sce/department/department_form.html'
     fields = ['name', 'school']
-    redirect = 'department-detail'
+    success_url = reverse_lazy('department-list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.instance.name = form.instance.name.upper()
         return super().form_valid(form)
-
 
 
 class DepartmentUpdateView(LoginRequiredMixin, UpdateView):

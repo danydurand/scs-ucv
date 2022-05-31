@@ -21,6 +21,9 @@
             {{ form|crispy }}
             <div class="form-group">
                 <button type="submit" class="btn btn-outline-info">Save</button>
+                {% if department %}
+                    <a href="{% url 'department-delete' department.id %}" class="btn btn-outline-danger ml-2">Delete</a>
+                {% endif %}
             </div>
         </form>
     </div>

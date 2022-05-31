@@ -131,6 +131,7 @@ ASIGNATURE_CHOICES = (
 )
 
 class Asignature(models.Model):
+    code = models.CharField(max_length=4, unique=True)
     name = models.CharField(max_length=100)
     asignature_type = models.CharField(max_length=1, choices=ASIGNATURE_CHOICES)
     is_active = models.BooleanField(default=True)

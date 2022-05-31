@@ -1,6 +1,6 @@
 
 def navegation(idxx, keys):
-    if len(keys) > 0:
+    if len(keys) > 0 and idxx in keys:
         this_item = keys.index(idxx) 
         prev_item = this_item - 1 if this_item > 0 else 0
         next_item = this_item + 1 if this_item < len(keys)-1 else len(keys)-1

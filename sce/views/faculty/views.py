@@ -1,11 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-# from django.contrib.sessions import  
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from sce.models import *
 from sce.modules.utils import navegation
 
 
+@login_required
 def index(request):
     school_qty = School.objects.count()
     depart_qty = Department.objects.count()
@@ -46,7 +48,7 @@ class FacultyCreateView(LoginRequiredMixin, CreateView):
     model = Faculty
     template_name = 'sce/faculty/faculty_form.html'
     fields = ['name','is_active']
-    redirect = 'faculty-detail'
+    success_url = reverse_lazy('faculty-list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

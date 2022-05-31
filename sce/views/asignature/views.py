@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from sce.models import Asignature
@@ -33,8 +34,8 @@ class AsignatureDetailView(LoginRequiredMixin, DetailView):
 class AsignatureCreateView(LoginRequiredMixin, CreateView):
     model = Asignature
     template_name = 'sce/asignature/asignature_form.html'
-    fields = ['name', 'asignature_type', 'is_active', 'is_exempted_interships', 'department']
-    redirect = 'asignature-detail'
+    fields = ['code', 'name', 'asignature_type', 'is_active', 'is_exempted_interships', 'department']
+    success_url = reverse_lazy('asignature-list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -46,7 +47,7 @@ class AsignatureCreateView(LoginRequiredMixin, CreateView):
 class AsignatureUpdateView(LoginRequiredMixin, UpdateView):
     model = Asignature
     template_name = 'sce/asignature/asignature_form.html'
-    fields = ['name', 'asignature_type', 'is_active', 'is_exempted_interships', 'department']
+    fields = ['code', 'name', 'asignature_type', 'is_active', 'is_exempted_interships', 'department']
     redirect = 'asignature-detail'
 
     def form_valid(self, form):
