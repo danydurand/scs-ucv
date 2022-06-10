@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from sce.models import Asignature
@@ -60,6 +61,14 @@ class AsignatureUpdateView(LoginRequiredMixin, UpdateView):
     #     if self.request.user == post.author:
     #         return True
     #     return False
+
+
+def asignature_delete(request, pk):
+    object = get_object_or_404(Asignature, pk=pk)
+    object.delete()
+    messages.success(request, 'Asignature Deleted !!')
+    return redirect(to='asignature-list')
+
 
 class AsignatureDeleteView(LoginRequiredMixin, DeleteView):
     model = Asignature

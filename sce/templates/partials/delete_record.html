@@ -1,0 +1,19 @@
+<script>
+    function deleteRecord(id, name, entity) {
+        Swal.fire({
+            'title': 'Are you sure you want to delete: ' + name + ' ?',
+            'text': 'This action is not undoable !!',
+            'icon': 'question',
+            'showCancelButton': true,
+            'cancelButtonText': 'No, Cancel',
+            'confirmButtonText': 'Yes, Delete',
+            'reverseButtons': true,
+            'confirmButtonColor': '#dc3545'
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = '/' + entity + '/' + id + '/delete';
+                }
+            })
+    }
+</script>

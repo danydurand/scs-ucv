@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from sce.models import School
@@ -41,6 +42,7 @@ class SchoolCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.instance.name = form.instance.name.upper()
+        messages.success(self.request, 'School Created !!')
         return super().form_valid(form)
 
 
@@ -53,6 +55,7 @@ class SchoolUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
         form.instance.name = form.instance.name.upper()
+        messages.success(self.request, 'School Updated !!')
         return super().form_valid(form)
 
     # def test_func(self):
@@ -62,9 +65,17 @@ class SchoolUpdateView(LoginRequiredMixin, UpdateView):
     #     return False
 
 
+def school_delete(request, pk):
+    object = get_object_or_404(School, pk=pk)
+    object.delete()
+    messages.success(request, 'School Deleted !!')
+    return redirect(to='school-list')
+
+
 class SchoolDeleteView(LoginRequiredMixin, DeleteView):
     model = School
     template_name = 'sce/school/school_confirm_delete.html'
+    # messages.success(self.request, 'School Deleted !!')
     success_url = '/school_list/'
 
 

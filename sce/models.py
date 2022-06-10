@@ -33,9 +33,11 @@ class Faculty(models.Model):
     def school_qty(self):
         return self.schools.count()
 
+    @property
+    def delete_record_string(self):
+        return f"deleteRecord({self.id}, '{self.name}', 'faculty')"
+
     class Meta:
-        verbose_name = 'Facultad'
-        verbose_name_plural = 'Facultades'
         ordering = ['name']
 
 
@@ -60,10 +62,12 @@ class School(models.Model):
     @property
     def department_qty(self):
         return self.departments.count()
+
+    @property
+    def delete_record_string(self):
+        return f"deleteRecord({self.id}, '{self.name}', 'school')"
     
     class Meta:
-        verbose_name = 'Escuela'
-        verbose_name_plural = 'Escuelas'
         ordering = ['name']
 
 
@@ -92,9 +96,11 @@ class Department(models.Model):
     def asignature_qty(self):
         return self.asignatures.count()
     
+    @property
+    def delete_record_string(self):
+        return f"deleteRecord({self.id}, '{self.name}', 'department')"
+
     class Meta:
-        verbose_name = 'Departamento'
-        verbose_name_plural = 'Departamentos'
         ordering = ['name']
 
 
@@ -119,9 +125,11 @@ class Professor(models.Model):
     def link(self):
         return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
 
+    @property
+    def delete_record_string(self):
+        return f"deleteRecord({self.id}, '{self.name}', 'professor')"
+
     class Meta:
-        verbose_name = 'Profesor'
-        verbose_name_plural = 'Profesores'
         ordering = ['name']
 
 
@@ -151,7 +159,9 @@ class Asignature(models.Model):
     def link(self):
         return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
 
+    @property
+    def delete_record_string(self):
+        return f"deleteRecord({self.id}, '{self.name}', 'asignature')"
+
     class Meta:
-        verbose_name = 'Asignature'
-        verbose_name_plural = 'Asignatures'
         ordering = ['name']

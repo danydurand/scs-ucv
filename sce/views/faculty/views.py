@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from sce.models import *
@@ -73,6 +74,14 @@ class FacultyUpdateView(LoginRequiredMixin, UpdateView):
     #     if self.request.user == post.author:
     #         return True
     #     return False
+
+
+def faculty_delete(request, pk):
+    object = get_object_or_404(Faculty, pk=pk)
+    object.delete()
+    messages.success(request, 'Faculty Deleted !!')
+    return redirect(to='faculty-list')
+
 
 class FacultyDeleteView(LoginRequiredMixin, DeleteView):
     model = Faculty

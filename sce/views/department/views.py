@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from sce.models import Department
@@ -61,6 +62,14 @@ class DepartmentUpdateView(LoginRequiredMixin, UpdateView):
     #     if self.request.user == post.author:
     #         return True
     #     return False
+
+
+def department_delete(request, pk):
+    object = get_object_or_404(Department, pk=pk)
+    object.delete()
+    messages.success(request, 'Department Deleted !!')
+    return redirect(to='department-list')
+
 
 class DepartmentDeleteView(LoginRequiredMixin, DeleteView):
     model = Department

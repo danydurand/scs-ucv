@@ -7,6 +7,9 @@
     <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 {% endblock datatables_css %}
 
+{% block custom_js %}
+    {% include 'partials/delete_record.html' %}
+{% endblock custom_js %}
 
 {% block content %}
     
@@ -40,7 +43,7 @@
                                 <a href="{% url 'faculty-update' faculty.id %}" class="btn btn-sm btn-outline-info">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="{% url 'faculty-delete' faculty.id %}" class="btn btn-sm btn-outline-danger">
+                                <a href="#" onclick="{{faculty.delete_record_string}}" class="btn btn-sm btn-outline-danger">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>

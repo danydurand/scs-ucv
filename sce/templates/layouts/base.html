@@ -22,6 +22,7 @@
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/datepicker.css' %}" rel="stylesheet">
@@ -128,6 +129,19 @@
     <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
     <script src="{% static 'js/datepicker/js/bootstrap-datepicker.js' %}"></script>
     <script src="{% static 'js/datepicker/js/prettify.js' %}"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+        {% for m in messages %}
+        <script>
+            Swal.fire({
+                'title': 'Message',
+                'text': '{{m}}',
+                'icon': 'success'
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
 
     {% block datatables_js %} {% endblock datatables_js %}
 
