@@ -1,0 +1,21 @@
+{% if object %}
+<div class="table-responsive">
+    <table class="table" width="80%" cellspacing="0">
+        <thead>
+            <th>Code</th>
+            <th>Asignature</th>
+            <th>Prelated By</th>
+            <th>Credits</th>
+        </thead>
+        <tbody>
+            {% for detail in object.details.all %}
+            <tr>
+                <td>{{detail.link|safe}}</a></td>
+                <td>{{detail.created_at| date:"d/m/Y H:i"}}</td>
+                <td>{{detail.updated_at| date:"d/m/Y H:i"}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}

@@ -1,0 +1,4 @@
+{% if obj_school %}
+    <td class="my_label">Created At</td>
+    <td>{{obj_school.created_at | date:"d/m/Y H:i"}} ({{obj_school.created_by}})</td>
+{% endif %}

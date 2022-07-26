@@ -52,7 +52,7 @@
                     <th>Updated At</th>
                 </thead>
                 <tbody>
-                {% for school in school_list %}
+                {% for school in object.schools.all %}
                     <tr>
                         <td>{{school.link|safe}}</td>
                         <td>{{school.created_at| date:"d/m/Y H:i"}}</td>

@@ -12,6 +12,7 @@ STATUS_CHOICES = (
     ('I', 'INACTIVE'),
 )
 
+
 class Faculty(models.Model):
     name = models.CharField(max_length=100, unique=True)
     is_active = models.BooleanField(default=False)
@@ -42,7 +43,7 @@ class Faculty(models.Model):
 
 
 class School(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='schools')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -157,7 +158,7 @@ class Asignature(models.Model):
         return reverse('asignature-detail', kwargs={'pk': self.id})
         
     def link(self):
-        return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
+        return f'<a href="{self.get_absolute_url()}">{self.code}</a>'
 
     @property
     def delete_record_string(self):
@@ -165,3 +166,74 @@ class Asignature(models.Model):
 
     class Meta:
         ordering = ['name']
+
+
+class Pensum(models.Model):
+    name = models.CharField(max_length=7, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_pensums')
+    updated_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, related_name='updated_pensums')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('pensum-detail', kwargs={'pk': self.id})
+
+    def link(self):
+        return f'<a href="{self.get_absolute_url()}">{self.name}</a>'
+
+    @property
+    def details_qty(self):
+        return self.details.count()
+
+    @property
+    def exists_detail_by_semester(self, semester):
+        return self.details.objects.filter(semester=semester).exists()
+
+    def get_details_by_semester(self, semester):
+        return self.details.objects.filter(semester=semester).all()
+
+    @property
+    def delete_record_string(self):
+        return f"deleteRecord({self.id}, '{self.name}', 'pensum')"
+
+    class Meta:
+        ordering = ['name']
+
+
+SEMESTER_CHOICES = [
+    [1, 'FIRST'],
+    [2, 'SECOND'],
+    [3, 'THIRD'],
+    [4, 'FOURTH'],
+    [5, 'FIFTH'],
+    [6, 'SIXTH'],
+    [7, 'SEVENTH'],
+    [8, 'EIGHTH'],
+    [9, 'NINETH'],
+    [10, 'TENTH'],
+]
+
+
+class PensumDetail(models.Model):
+    pensum = models.ForeignKey(Pensum, related_name='details', on_delete=models.CASCADE)
+    semester = models.IntegerField(choices=SEMESTER_CHOICES)
+    asignature = models.ForeignKey(Asignature, related_name='pensum_detail', on_delete=models.CASCADE)
+    credits = models.IntegerField()
+    prelated_by = models.CharField(max_length=30, null=True, blank=True)
+
+    def __str__(self):
+        return "{}-{}-{}".format(self.pensum.name, self.semester, self.asignature.name)
+
+    class Meta:
+        ordering = ['pensum','semester','id']
+
+    def get_absolute_url(self):
+        return reverse('pensum-detail', kwargs={'pk': self.pensum_id})
+
+    def link(self):
+        return f'<a href="{self.get_absolute_url()}">{self}</a>'

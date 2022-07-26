@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from sce.models import Asignature
 from sce.modules.utils import navegation
+from sce.forms.asignature.forms import AsignatureForm
 
 
 class AsignatureListView(LoginRequiredMixin, ListView):
@@ -32,19 +33,48 @@ class AsignatureDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class AsignatureCreateView(LoginRequiredMixin, CreateView):
-    model = Asignature
-    template_name = 'sce/asignature/asignature_form.html'
-    fields = ['code', 'name', 'asignature_type', 'is_active', 'is_exempted_interships', 'department']
-    success_url = reverse_lazy('asignature-list')
+class AsignatureCreateView(LoginRequiredMixin, View):
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        form.instance.name = form.instance.name.upper()
-        return super().form_valid(form)
+    def get(self, request):
+        form = AsignatureForm()
+        context = {'form': form, }
+        return render(request, 'sce/asignature/asignature_form.html', context)
+
+    def post(self, request):
+        form = AsignatureForm(request.POST)
+        if form.is_valid():
+            form.instance.created_by = request.user
+            form.save()
+            messages.success(request, "Asignature created successfully !!")
+            return redirect(to='asignature-list')
+        else:
+            context = {'form': form, }
+        return render(request, 'sce/asignature/asignature_form.html', context)
+    
+
+class AsignatureUpdateView(LoginRequiredMixin, View):
+
+    def get(self, request, pk):
+        asignature = get_object_or_404(Asignature, id=pk)
+        form = AsignatureForm(instance=asignature)
+        context = {'form': form, }
+        return render(request, 'sce/asignature/asignature_form.html', context)
+
+    def post(self, request, pk):
+        asignature = get_object_or_404(Asignature, id=pk)
+        form = AsignatureForm(request.POST, instance=asignature)
+        if form.is_valid():
+            form.instance.updated_by = request.user
+            form.save()
+            messages.success(request, "Asignature updated successfully !!")
+            return redirect(to='asignature-list')
+        else:
+            context = {'form': form, }
+        return render(request, 'sce/asignature/asignature_form.html', context)
+    
 
 
-
+"""
 class AsignatureUpdateView(LoginRequiredMixin, UpdateView):
     model = Asignature
     template_name = 'sce/asignature/asignature_form.html'
@@ -53,7 +83,7 @@ class AsignatureUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
-        form.instance.name = form.instance.name.upper()
+        form.instance.name = form.instance.name.title()
         return super().form_valid(form)
 
     # def test_func(self):
@@ -61,7 +91,7 @@ class AsignatureUpdateView(LoginRequiredMixin, UpdateView):
     #     if self.request.user == post.author:
     #         return True
     #     return False
-
+"""
 
 def asignature_delete(request, pk):
     object = get_object_or_404(Asignature, pk=pk)

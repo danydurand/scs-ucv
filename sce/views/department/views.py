@@ -42,7 +42,7 @@ class DepartmentCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-        form.instance.name = form.instance.name.upper()
+        form.instance.name = form.instance.name.title()
         return super().form_valid(form)
 
 
@@ -54,7 +54,7 @@ class DepartmentUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
-        form.instance.name = form.instance.name.upper()
+        form.instance.name = form.instance.name.title()
         return super().form_valid(form)
 
     # def test_func(self):

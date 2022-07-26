@@ -16,9 +16,34 @@
         {% endif %}
     </div>
     <div class="card-body">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ field.label }}</strong><span>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+        {% endif %}
         <form method="post">
             {% csrf_token %}
-            {{ form|crispy }}
+            <div class="form-row">
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-4">
+                    {{ form.name | as_crispy_field }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form.faculty | as_crispy_field }}
+                </div>
+                <div class="form-group col-md-3" style="margin-top: 2.5em;">
+                    {{ form.is_active | as_crispy_field }}
+                </div>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-outline-info">Save</button>
             </div>

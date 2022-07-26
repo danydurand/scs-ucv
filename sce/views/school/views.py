@@ -1,9 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from sce.models import School
+from sce.forms.school.forms import SchoolForm
 from sce.modules.utils import navegation
 
 
@@ -23,7 +25,7 @@ class SchoolDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['department_list'] = context['school'].departments.all()
+        # context['department_list'] = context['school'].departments.all()
         keys = []
         if 'school_keys' in self.request.session:
             keys = self.request.session['school_keys']
@@ -33,36 +35,68 @@ class SchoolDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class SchoolCreateView(LoginRequiredMixin, CreateView):
-    model = School
-    template_name = 'sce/school/school_form.html'
-    fields = ['name', 'faculty']
-    success_url = reverse_lazy('school-list')
+class SchoolCreateView(LoginRequiredMixin, View):
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        form.instance.name = form.instance.name.upper()
-        messages.success(self.request, 'School Created !!')
-        return super().form_valid(form)
+    def get(self, request):
+        form = SchoolForm()
+        context = {'form': form}
+        return render(request, 'sce/school/school_form.html', context)
+
+    def post(self, request):
+        form = SchoolForm(request.POST or None)
+        if form.is_valid():
+            form.instance.created_by = request.user
+            form.save()
+            messages.success(request, 'School Created !!')
+            return redirect(to='school-list')
+        else:
+            context = {'form': form}
+        return render(request, 'sce/school/school_form.html', context)
+
+# class SchoolCreateView(LoginRequiredMixin, CreateView):
+#     model = School
+#     template_name = 'sce/school/school_form.html'
+#     fields = ['name', 'faculty']
+#     success_url = reverse_lazy('school-list')
+
+#     def form_valid(self, form):
+#         form.instance.created_by = self.request.user
+#         form.instance.name = form.instance.name.title()
+#         messages.success(self.request, 'School Created !!')
+#         return super().form_valid(form)
 
 
-class SchoolUpdateView(LoginRequiredMixin, UpdateView):
-    model = School
-    template_name = 'sce/school/school_form.html'
-    fields = ['name', 'faculty']
-    redirect = 'school-detail'
+class SchoolUpdateView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
+        form = SchoolForm(instance=school)
+        context = {'form': form}
+        return render(request, 'sce/school/school_form.html', context)
 
-    def form_valid(self, form):
-        form.instance.updated_by = self.request.user
-        form.instance.name = form.instance.name.upper()
-        messages.success(self.request, 'School Updated !!')
-        return super().form_valid(form)
+    def post(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
+        form = SchoolForm(request.POST, instance=school)
+        if form.is_valid():
+            form.instance.updated_by = request.user
+            form.save()
+            messages.success(request, 'School Updated !!')
+            return redirect(to='school-list')
+        else:
+            context = {'form': form}
+        return render(request, 'sce/school/school_form.html', context)
 
-    # def test_func(self):
-    #     post = self.get_object()
-    #     if self.request.user == post.author:
-    #         return True
-    #     return False
+
+# class SchoolUpdateView(LoginRequiredMixin, UpdateView):
+#     model = School
+#     template_name = 'sce/school/school_form.html'
+#     fields = ['name', 'faculty']
+#     redirect = 'school-detail'
+
+#     def form_valid(self, form):
+#         form.instance.updated_by = self.request.user
+#         form.instance.name = form.instance.name.title()
+#         messages.success(self.request, 'School Updated !!')
+#         return super().form_valid(form)
 
 
 def school_delete(request, pk):
@@ -79,3 +113,10 @@ class SchoolDeleteView(LoginRequiredMixin, DeleteView):
     success_url = '/school_list/'
 
 
+def school_more_info(request, pk):
+    print('pk',pk)
+    obj_school = School.objects.get(pk=pk)
+    return render(request, 'sce/school/partials/more_info.html',{'obj_school': obj_school})
+
+def hola(request):
+    return HttpResponse('Hola')

@@ -5,10 +5,17 @@ from .views.school.views import *
 from .views.department.views import * 
 from .views.professor.views import * 
 from .views.asignature.views import * 
+from .views.pensum.views import * 
 
 
 urlpatterns = [
     path('', index, name='index'),
+
+    path('pensum_list/', PensumListView.as_view(), name='pensum-list'),
+    path('pensum/<int:pk>/', PensumDetailView.as_view(), name='pensum-detail'),
+    path('pensum/<int:pk>/update', PensumUpdateView.as_view(), name='pensum-update'),
+    path('pensum/create', PensumCreateView.as_view(), name='pensum-create'),
+    path('pensum/<int:pk>/delete', PensumDeleteView.as_view(), name='pensum-delete'),
 
     path('asignature_list/', AsignatureListView.as_view(), name='asignature-list'),
     path('asignature/<int:pk>/', AsignatureDetailView.as_view(), name='asignature-detail'),
@@ -44,3 +51,13 @@ urlpatterns = [
     path('faculty/<int:pk>/delete', faculty_delete, name='faculty-delete'),
     # path('faculty/<int:pk>/delete', FacultyDeleteView.as_view(), name='faculty-delete'),
 ]
+
+htmx_urlpatterns = [
+
+    path('add_pensum_detail', hola, name='add-pensum-detail'),
+
+    path('hola/', hola, name='hola'),
+    path('school_more_info/<int:pk>', school_more_info, name='school-more-info'),
+]
+
+urlpatterns += htmx_urlpatterns

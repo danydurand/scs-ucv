@@ -35,7 +35,6 @@ class FacultyDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['school_list'] = context['faculty'].schools.all()
         keys = []
         if 'faculty_keys' in self.request.session:
             keys = self.request.session['faculty_keys']
@@ -53,7 +52,7 @@ class FacultyCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-        form.instance.name = form.instance.name.upper()
+        form.instance.name = form.instance.name.title()
         return super().form_valid(form)
 
 
@@ -66,7 +65,7 @@ class FacultyUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user
-        form.instance.name = form.instance.name.upper()
+        form.instance.name = form.instance.name.title()
         return super().form_valid(form)
 
     # def test_func(self):

@@ -19,25 +19,30 @@
         <form method="post">
             {% csrf_token %}
             <div class="form-row">
+                <div class="form-group col-md-3"></div>
                 <div class="form-group col-md-3">
                     {{ form.code | as_crispy_field }}
                 </div>
-                <div class="form-group col-md-6">
-                    {{ form.name | as_crispy_field }}
-                </div>
                 <div class="form-group col-md-3">
-                    {{ form.asignature_type | as_crispy_field }}
+                    {{ form.name | as_crispy_field }}
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-3" style="margin-top: 30px">
+                <div class="form-group col-md-3"></div>
+                <div class="form-group col-md-3">
+                    {{ form.asignature_type | as_crispy_field }}
+                </div>
+                <div class="form-group col-md-3">
+                    {{ form.department | as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3"></div>
+                <div class="form-group col-md-3" style="text-align:center">
                     {{ form.is_active | as_crispy_field }}
                 </div>
-                <div class="form-group col-md-3" style="margin-top: 30px">
+                <div class="form-group col-md-3" style="text-align: center;">
                     {{ form.is_exempted_interships | as_crispy_field }}
-                </div>
-                <div class="form-group col-md-6">
-                    {{ form.department | as_crispy_field }}
                 </div>
             </div>
             <div class="form-group">

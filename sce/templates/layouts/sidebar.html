@@ -104,6 +104,18 @@
     
     <!-- Nav Item - Tables -->
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGestion" aria-expanded="true"
+            aria-controls="collapseGestion">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Gestión</span>
+        </a>
+        <div id="collapseGestion" class="collapse" aria-labelledby="headingGestion" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{% url 'pensum-list' %}">Pensum</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables" aria-expanded="true"
             aria-controls="collapseTables">
             <i class="fas fa-fw fa-cog"></i>
@@ -112,7 +124,9 @@
         <div id="collapseTables" class="collapse" aria-labelledby="headingTables" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Master Tables:</h6>
+                <!--
                 <a class="collapse-item" href="{% url 'faculty-list' %}">Faculties</a>
+                -->
                 <a class="collapse-item" href="{% url 'school-list' %}">Schools</a>
                 <a class="collapse-item" href="{% url 'department-list' %}">Departments</a>
                 <a class="collapse-item" href="{% url 'professor-list' %}">Professors</a>
