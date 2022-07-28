@@ -1,11 +1,13 @@
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from sce.models import School
+from sce.models import School, Department
 from sce.forms.school.forms import SchoolForm
+from sce.forms.department.forms import DepartmentSchoolForm
 from sce.modules.utils import navegation
 
 
@@ -19,20 +21,46 @@ class SchoolListView(LoginRequiredMixin, ListView):
         return context
 
 
-class SchoolDetailView(LoginRequiredMixin, DetailView):
-    model = School
-    template_name = 'sce/school/school_detail.html'
+class SchoolDetailView(LoginRequiredMixin, View):
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['department_list'] = context['school'].departments.all()
+    def get(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
+        context = { 
+            'school': school ,
+        }
         keys = []
         if 'school_keys' in self.request.session:
             keys = self.request.session['school_keys']
         prev_item, next_item = navegation(context['school'].id, keys)
         context['prev_item'] = prev_item
         context['next_item'] = next_item
-        return context
+        return render(request, 'sce/school/school_detail.html', context)
+
+
+    def post(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
+        name = request.POST.get('name').title()
+        feedback = {}
+        #---------------------------
+        # Name repeated validation
+        #---------------------------
+        if Department.objects.filter(name=name, school=school).exists():
+            feedback['errors'] = ['Department-School combination already exists']
+        else:
+            Department.objects.create(
+                name=name, 
+                school=school,
+                created_by=request.user
+            )
+            messages.success(request,'Department added !!')
+        context = {
+            'school': school,
+            'feedback': feedback
+        }
+        return render(request, 'sce/school/school_detail.html', context)
+
+
+
 
 
 class SchoolCreateView(LoginRequiredMixin, View):

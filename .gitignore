@@ -3,5 +3,6 @@ db.sqlite3
 sce/__pycache__/**
 sce/views/__pycache__/*.pyc
 sce/views/department/__pycache__/*.pyc
+sce/forms/department/__pycache__/*.pyc
 sce/views/faculty/__pycache__/*.pyc
 sce/views/school/__pycache__/*.pyc

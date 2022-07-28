@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -24,30 +25,42 @@
             <table class="table" width="80%" cellspacing="0">
                 <tbody>
                     <tr>
-                        <td class="my_label" style="width: 20%">Name</td>
-                        <td class="d-flex justify-content-between">
-                            {{object.name}}
-                            <!--
-                            <span class="badge btn-success badge-pill" style="cursor: pointer;"
-                                hx-post="{% url 'school-more-info' object.id %}"
-                                hx-target="#more-info">more</span>
-                            -->
+                        <td class="my_label" style="width: 4%">Name:</td>
+                        <td>
+                            <span style="color: black">{{school.name}}</span> [
+                            <b>Faculty:</b> {{school.faculty.link|safe }} | 
+                            <b>Created:</b> {{school.created_at|date:"d/m/Y H:i"}} ({{school.created_by}}) | 
+                            <b>Updated:</b> {{school.updated_at|date:"d/m/Y H:i"}} ({{school.updated_by}})
+                            ]
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="my_label" style="width: 20%">Faculty</td>
-                        <td>{{object.faculty.link|safe }}</td>
-                    </tr>
-                    <tr>
-                        <td class="my_label">Created At</td>
-                        <td>{{object.created_at | date:"d/m/Y H:i"}} ({{object.created_by}})</td>
-                    </tr>
-                    <tr>
-                        <td class="my_label">Updated At</td>
-                        <td>{{object.updated_at | date:"d/m/Y H:i"}} ({{object.updated_by}})</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-9">
+                {% if feedback.errors %}
+                    {% for error in feedback.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <form class="d-flex align-items-center" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="name" class="form-control" Placeholder="Department Name"
+                        style="text-transform: capitalize; width: 70%" maxlength="100" minlength="3" required>
+                    <button type="submit" class="btn btn-sm btn-success ml-2" style="margin-top: .1em">
+                        Add Department
+                    </button>
+                </form>
+            </div>
         </div>
         <div class="text-center table-success" style="border-radius: 3px; padding: 2px">
             <span class="text-primary my_label">Departments</span>
@@ -60,7 +73,7 @@
                     <th>Updated At</th>
                 </thead>
                 <tbody>
-                    {% for department in object.departments.all %}
+                    {% for department in school.departments.all %}
                     <tr>
                         <td>{{department.link|safe}}</a></td>
                         <td>{{department.created_at| date:"d/m/Y H:i"}}</td>
