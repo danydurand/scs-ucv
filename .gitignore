@@ -4,5 +4,7 @@ sce/__pycache__/**
 sce/views/__pycache__/*.pyc
 sce/views/department/__pycache__/*.pyc
 sce/forms/department/__pycache__/*.pyc
+sce/forms/pensum_detail/__pycache__/*.pyc
+sce/forms/professor/__pycache__/*.pyc
 sce/views/faculty/__pycache__/*.pyc
 sce/views/school/__pycache__/*.pyc

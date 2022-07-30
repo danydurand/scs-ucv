@@ -206,6 +206,7 @@ class Pensum(models.Model):
 
 
 SEMESTER_CHOICES = [
+    [None, 'SEMESTER'],
     [1, 'FIRST'],
     [2, 'SECOND'],
     [3, 'THIRD'],

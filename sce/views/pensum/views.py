@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from sce.models import Pensum, PensumDetail, Asignature, SEMESTER_CHOICES
 from sce.modules.utils import navegation
+from sce.forms.pensum_detail.forms import PensumDetailForm
 import json
 
 
@@ -21,44 +22,97 @@ class PensumListView(LoginRequiredMixin, ListView):
 
 
 class PensumDetailView(LoginRequiredMixin, View):
+  
     def get(self, request, pk):
         object = get_object_or_404(Pensum, id=pk)
-        context = {
-            'object': object,
-            'semesters': SEMESTER_CHOICES,
-        }
+        form = PensumDetailForm()
+        context = {}
+        context['form'] = form
+        context['object'] = object
+        context['semesters'] = SEMESTER_CHOICES
         keys = []
         if 'pensum_keys' in self.request.session:
             keys = self.request.session['pensum_keys']
         prev_item, next_item = navegation(object.id, keys)
         context['prev_item'] = prev_item
         context['next_item'] = next_item
-        self.request.session['pensum_id'] = object.id
         return render(request, 'sce/pensum/pensum_detail.html', context)
 
     def post(self, request, pk):
-        print('POST:',request.POST)
-        pensum = get_object_or_404(Pensum, pk=self.request.session['pensum_id'])
-        asignature = Asignature.objects.filter(code=request.POST.get('code')).get()
-        semester = request.POST.get('semester')
-        prelated_by = request.POST.get('prelated_by')
-        credits = request.POST.get('credits')
+        object = get_object_or_404(Pensum, id=pk)
+        form = PensumDetailForm(request.POST or None)
+        if form.is_valid():
+            print('Valid')
 
-        print('Datos', pensum, asignature, semester, prelated_by, credits)
+            data = form.cleaned_data
+            print('data',data)
+            asignature = Asignature.objects.get(code=data['asignature'])
+            semester = data['semester']
+            prelated_by = data['prelated_by']
+            credits = data['credits']
 
-        detail = PensumDetail.objects.create(
-            pensum=pensum,
-            asignature=asignature,
-            semester=semester,
-            prelated_by=prelated_by,
-            credits=credits,
-        )
-        messages.success(request, f'Detail added')
-        context = {
-            'object': pensum,
-            'semesters': SEMESTER_CHOICES,
-        }
+            print('Datos', object, asignature, semester, prelated_by, credits)
+
+            PensumDetail.objects.create(
+                pensum = object,
+                asignature = asignature,
+                semester = semester,
+                prelated_by = prelated_by,
+                credits = credits
+            )
+            messages.success(request,'Pesum-Detail added !!')
+            return redirect(to='pensum-detail', pk=object.pk)
+        context = {}
+        context['form'] = form
+        context['object'] = object
+        context['semesters'] = SEMESTER_CHOICES
+        keys = []
+        if 'pensum_keys' in self.request.session:
+            keys = self.request.session['pensum_keys']
+        prev_item, next_item = navegation(object.id, keys)
+        context['prev_item'] = prev_item
+        context['next_item'] = next_item
         return render(request, 'sce/pensum/pensum_detail.html', context)
+
+# class PensumDetailView(LoginRequiredMixin, View):
+#     def get(self, request, pk):
+#         object = get_object_or_404(Pensum, id=pk)
+#         context = {
+#             'object': object,
+#             'semesters': SEMESTER_CHOICES,
+#         }
+#         keys = []
+#         if 'pensum_keys' in self.request.session:
+#             keys = self.request.session['pensum_keys']
+#         prev_item, next_item = navegation(object.id, keys)
+#         context['prev_item'] = prev_item
+#         context['next_item'] = next_item
+#         self.request.session['pensum_id'] = object.id
+#         return render(request, 'sce/pensum/pensum_detail.html', context)
+
+#     def post(self, request, pk):
+#         print('POST:',request.POST)
+#         pensum = get_object_or_404(Pensum, pk=self.request.session['pensum_id'])
+#         asignature = Asignature.objects.filter(code=request.POST.get('code')).get()
+#         semester = request.POST.get('semester')
+#         prelated_by = request.POST.get('prelated_by')
+#         credits = request.POST.get('credits')
+
+#         print('Datos', pensum, asignature, semester, prelated_by, credits)
+
+#         detail = PensumDetail.objects.create(
+#             pensum=pensum,
+#             asignature=asignature,
+#             semester=semester,
+#             prelated_by=prelated_by,
+#             credits=credits,
+#         )
+#         messages.success(request, f'Detail added')
+#         context = {
+#             'object': pensum,
+#             'semesters': SEMESTER_CHOICES,
+#         }
+#         return render(request, 'sce/pensum/pensum_detail.html', context)
 
 
 # class PensumDetailView(LoginRequiredMixin, DetailView):
